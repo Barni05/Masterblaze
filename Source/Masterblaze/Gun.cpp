@@ -69,6 +69,10 @@ void AGun::OnFire()
 			//}
 		}
 	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Projectile null"))
+	}
 
 	// try and play the sound if specified
 	if (FireSound != NULL)
