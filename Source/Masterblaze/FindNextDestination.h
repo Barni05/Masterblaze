@@ -13,7 +13,14 @@ UCLASS()
 class MASTERBLAZE_API UFindNextDestination : public UBTTaskNode
 {
 	GENERATED_BODY()
+private:
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	
+protected:
+	UPROPERTY(EditAnywhere, Category = "Key")
+	struct FBlackboardKeySelector NextDestinationKey;
+
+	UPROPERTY(EditAnywhere, Category = "Key")
+	FBlackboardKeySelector IndexKey;
+
 };
