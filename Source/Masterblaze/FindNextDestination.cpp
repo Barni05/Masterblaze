@@ -14,16 +14,12 @@ EBTNodeResult::Type UFindNextDestination::ExecuteTask(UBehaviorTreeComponent& Ow
 	auto Pawn = OwnerComp.GetAIOwner()->GetPawn();
 	
 	auto GuardPathRef = Pawn->FindComponentByClass<UGuardPath>();
-	if (!GuardPathRef)
-	{
-		UE_LOG(LogTemp, Error, TEXT("EC1 A guard is missing GuardPathComponent"))
-		return EBTNodeResult::Failed;
-	}
+	if (!GuardPathRef) { return EBTNodeResult::Failed; }
 	TArray<AActor*> Destinations = GuardPathRef->Paths;
 	int CurrentIndex = BlackboardComponent->GetValueAsInt(IndexKey.SelectedKeyName);
 	BlackboardComponent->SetValueAsObject(NextDestinationKey.SelectedKeyName, Destinations[CurrentIndex]);
-	CurrentIndex++;
-	int NewIndex = CurrentIndex % Destinations.Num();
+	auto NewIndex = (CurrentIndex + 1) % Destinations.Num();
+	UE_LOG(LogTemp, Warning, TEXT("%i is the Index"), CurrentIndex)
 	BlackboardComponent->SetValueAsInt(IndexKey.SelectedKeyName, NewIndex);
 	return EBTNodeResult::Succeeded;
  }
