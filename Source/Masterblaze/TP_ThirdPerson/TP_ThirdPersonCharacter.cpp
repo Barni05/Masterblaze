@@ -56,7 +56,7 @@ void ATP_ThirdPersonCharacter::BeginPlay()
 	if (Gun)
 	{
 		Gun->AnimInstance = Mesh->GetAnimInstance();
-		Gun->AttachToComponent(Mesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+		Gun->AttachToComponent(Mesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), FName("GripPoint"));
 	}
 	InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
 }
