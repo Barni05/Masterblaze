@@ -61,4 +61,6 @@ void ASpawnPoint::SpawnAtRandomLocation()
 	FVector HitLocation = HitResult.Location;
 	HitLocation.Z += 100;
 	auto NPC = GetWorld()->SpawnActor<ANPCCharacter>(NPCCharacter, HitLocation, CharacterRotation);
+	NPC->SpawnDefaultController();
+	NPC->SpawnPoint = this;
 }
