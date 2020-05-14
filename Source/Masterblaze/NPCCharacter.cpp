@@ -2,7 +2,7 @@
 
 
 #include "NPCCharacter.h"
-
+#include "SpawnPoint.h"
 // Sets default values
 ANPCCharacter::ANPCCharacter()
 {
@@ -32,3 +32,14 @@ void ANPCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 }
 
+void ANPCCharacter::Destroyed()
+{
+	if (SpawnPoint)
+	{
+		SpawnPoint->ActivePawns.Remove(this);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("EC2: SpawnPoint reference is NULL in NPCCharacter"))
+	}
+}

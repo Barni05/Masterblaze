@@ -6,6 +6,9 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "GameFramework/Pawn.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 #include "NPCCharacter.h"
 
 // Sets default values
@@ -27,8 +30,9 @@ void ASpawnPoint::BeginPlay()
 	{
 		SpawnAtRandomLocation();
 	}
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ASpawnPoint::ReSpawn, TimeTillRespawn, false);
 }
-
 // Called every frame
 void ASpawnPoint::Tick(float DeltaTime)
 {
@@ -63,4 +67,9 @@ void ASpawnPoint::SpawnAtRandomLocation()
 	auto NPC = GetWorld()->SpawnActor<ANPCCharacter>(NPCCharacter, HitLocation, CharacterRotation);
 	NPC->SpawnDefaultController();
 	NPC->SpawnPoint = this;
+	ActivePawns.Add(NPC);
+}
+
+void ASpawnPoint::ReSpawn()
+{
 }

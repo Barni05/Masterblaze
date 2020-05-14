@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "SpawnPoint.generated.h"
 
 UCLASS()
@@ -18,6 +19,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void ReSpawn();
+
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	class UBoxComponent* Bound;
 
@@ -29,6 +32,11 @@ public:
 
 	void SpawnAtRandomLocation();
 
+	UPROPERTY(EditAnywhere, Category = "Respawn")
+	TArray<class APawn*> ActivePawns;
+
+	UPROPERTY(EditAnywhere, Category = "Respawn")
+	float TimeTillRespawn;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
