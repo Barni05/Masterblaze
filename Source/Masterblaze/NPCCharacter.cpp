@@ -34,9 +34,14 @@ void ANPCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 void ANPCCharacter::Destroyed()
 {
+
 	if (SpawnPoint)
 	{
 		SpawnPoint->ActivePawns.Remove(this);
+		FTimerHandle TimerHandle;
+		float RespawnTime = SpawnPoint->TimeTillRespawn;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, SpawnPoint, &ASpawnPoint::ReSpawn, RespawnTime, false);
+
 	}
 	else
 	{

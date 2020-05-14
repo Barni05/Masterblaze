@@ -30,6 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Spawn")
 	TSubclassOf<class ANPCCharacter> NPCCharacter;
 
+	UFUNCTION(BlueprintCallable)
 	void SpawnAtRandomLocation();
 
 	UPROPERTY(EditAnywhere, Category = "Respawn")
@@ -37,6 +38,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Respawn")
 	float TimeTillRespawn;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
