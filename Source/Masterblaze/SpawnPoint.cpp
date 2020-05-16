@@ -63,10 +63,17 @@ void ASpawnPoint::SpawnAtRandomLocation()
 	GetWorld()->LineTraceSingleByObjectType(HitResult, StartLocation, EndLocation, FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic));
 	FVector HitLocation = HitResult.Location;
 	HitLocation.Z += 100;
-	auto NPC = GetWorld()->SpawnActor<ANPCCharacter>(NPCCharacter, HitLocation, CharacterRotation);
-	NPC->SpawnDefaultController();
-	NPC->SpawnPoint = this;
-	ActivePawns.Add(NPC);
+	auto ObjectToSpawn = GetWorld()->SpawnActor<AActor>(NPCCharacter, HitLocation, CharacterRotation);
+	if (bIsNPC)
+	{
+		Cast<ANPCCharacter>(ObjectToSpawn)->SpawnDefaultController();
+		Cast<ANPCCharacter>(ObjectToSpawn)->SpawnPoint = this;
+		ActivePawns.Add(Cast<ANPCCharacter>(ObjectToSpawn));
+	}
+	else if (!bIsNPC)
+	{
+		ActivePawns.Add(ObjectToSpawn);
+	}
 }
 
 void ASpawnPoint::ReSpawn()

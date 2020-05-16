@@ -28,16 +28,19 @@ public:
 	int32 SpawnAmount;
 
 	UPROPERTY(EditAnywhere, Category = "Spawn")
-	TSubclassOf<class ANPCCharacter> NPCCharacter;
+	TSubclassOf<class AActor> NPCCharacter;
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnAtRandomLocation();
 
 	UPROPERTY(EditAnywhere, Category = "Respawn")
-	TArray<class APawn*> ActivePawns;
+	TArray<class AActor*> ActivePawns;
 
 	UPROPERTY(EditAnywhere, Category = "Respawn")
 	float TimeTillRespawn;
+
+	UPROPERTY(EditAnywhere, Category = "Spawn")
+	bool bIsNPC;
 
 protected:
 	// Called when the game starts or when spawned
