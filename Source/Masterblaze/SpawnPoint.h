@@ -28,7 +28,7 @@ public:
 	int32 SpawnAmount;
 
 	UPROPERTY(EditAnywhere, Category = "Spawn")
-	TSubclassOf<class AActor> NPCCharacter;
+	TSubclassOf<class AActor> Object;
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnAtRandomLocation();

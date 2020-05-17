@@ -30,6 +30,8 @@ void ASpawnPoint::BeginPlay()
 	{
 		SpawnAtRandomLocation();
 	}
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ASpawnPoint::ReSpawn, TimeTillRespawn, true);
 	
 }
 // Called every frame
@@ -63,7 +65,7 @@ void ASpawnPoint::SpawnAtRandomLocation()
 	GetWorld()->LineTraceSingleByObjectType(HitResult, StartLocation, EndLocation, FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic));
 	FVector HitLocation = HitResult.Location;
 	HitLocation.Z += 100;
-	auto ObjectToSpawn = GetWorld()->SpawnActor<AActor>(NPCCharacter, HitLocation, CharacterRotation);
+	auto ObjectToSpawn = GetWorld()->SpawnActor<AActor>(Object, HitLocation, CharacterRotation);
 	if (bIsNPC)
 	{
 		Cast<ANPCCharacter>(ObjectToSpawn)->SpawnDefaultController();
@@ -78,7 +80,7 @@ void ASpawnPoint::SpawnAtRandomLocation()
 
 void ASpawnPoint::ReSpawn()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PIG: Active pawn: %i , Spawn amount: %i"), ActivePawns.Num(), SpawnAmount)
+	
 	if (ActivePawns.Num() < SpawnAmount)
 	{
 		SpawnAtRandomLocation();
