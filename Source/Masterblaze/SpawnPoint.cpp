@@ -8,6 +8,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
+#include "HealingItem.h"
 #include "TimerManager.h"
 #include "NPCCharacter.h"
 
@@ -30,7 +31,12 @@ void ASpawnPoint::BeginPlay()
 	{
 		SpawnAtRandomLocation();
 	}
-	
+	if (!bIsNPC)
+	{
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ASpawnPoint::ReSpawn, TimeTillRespawn, false);
+
+	}
 }
 // Called every frame
 void ASpawnPoint::Tick(float DeltaTime)
@@ -73,12 +79,12 @@ void ASpawnPoint::SpawnAtRandomLocation()
 	else if (!bIsNPC)
 	{
 		ActivePawns.Add(ObjectToSpawn);
+		Cast<AHealingItem>(ObjectToSpawn)->SpawnPoint = this;
 	}
 }
 
 void ASpawnPoint::ReSpawn()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PIG: Active pawn: %i , Spawn amount: %i"), ActivePawns.Num(), SpawnAmount)
 	if (ActivePawns.Num() < SpawnAmount)
 	{
 		SpawnAtRandomLocation();
