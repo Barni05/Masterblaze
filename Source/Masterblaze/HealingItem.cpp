@@ -4,6 +4,7 @@
 #include "HealingItem.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "SpawnPoint.h"
 // Sets default values
 AHealingItem::AHealingItem()
 {
@@ -25,3 +26,11 @@ void AHealingItem::Tick(float DeltaTime)
 
 }
 
+void AHealingItem::Destroyed()
+{
+	Super::Destroyed();
+	if (SpawnPoint)
+	{
+		SpawnPoint->ActivePawns.Remove(this);
+	}
+}

@@ -9,6 +9,7 @@
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "HealingItem.h"
 #include "NPCCharacter.h"
 
 // Sets default values
@@ -75,6 +76,7 @@ void ASpawnPoint::SpawnAtRandomLocation()
 	else if (!bIsNPC)
 	{
 		ActivePawns.Add(ObjectToSpawn);
+		Cast<AHealingItem>(ObjectToSpawn)->SpawnPoint = this;
 	}
 }
 

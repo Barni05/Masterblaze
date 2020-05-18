@@ -15,6 +15,9 @@ public:
 	// Sets default values for this actor's properties
 	AHealingItem();
 
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	class ASpawnPoint* SpawnPoint;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,5 +25,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void Destroyed() override;
 
 };
