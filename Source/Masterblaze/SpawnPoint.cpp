@@ -33,7 +33,12 @@ void ASpawnPoint::BeginPlay()
 	}
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ASpawnPoint::ReSpawn, TimeTillRespawn, true);
-	
+	if (bIsNPC)
+	{
+		FTimerHandle TimerHandleForHamper;
+		//Timer, when expires, increase the difficulty by increasing SpawnAmount
+		GetWorld()->GetTimerManager().SetTimer(TimerHandleForHamper, this, &ASpawnPoint::IncreaseDifficulty, TimeTillHamper, true);
+	}
 }
 // Called every frame
 void ASpawnPoint::Tick(float DeltaTime)
@@ -87,4 +92,9 @@ void ASpawnPoint::ReSpawn()
 	{
 		SpawnAtRandomLocation();
 	}
+}
+
+void ASpawnPoint::IncreaseDifficulty()
+{
+	SpawnAmount += 2;
 }

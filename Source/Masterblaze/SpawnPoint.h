@@ -21,6 +21,8 @@ public:
 
 	void ReSpawn();
 
+	void IncreaseDifficulty();
+
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	class UBoxComponent* Bound;
 
@@ -41,6 +43,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Spawn")
 	bool bIsNPC;
+
+	UPROPERTY(EditAnywhere, Category = "Hamper")
+	float TimeTillHamper;
 
 protected:
 	// Called when the game starts or when spawned
